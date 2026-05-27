@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant Browser
+    participant Server
+    Note over Browser: Click save and prevent page reload
+    Note over Browser: Browser creates note object
+    Note over Browser: Browser updates the list
+    Browser ->> Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    Note left of Server: Note sent as JSON to server as request body
+    Server -->> Browser: 201 Created
+    Note over Browser: No page reaload 
