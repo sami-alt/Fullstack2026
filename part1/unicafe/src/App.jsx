@@ -5,12 +5,22 @@ const Disaplay = ({text, value}) => <p>{text} {value}</p>
 const Statistics = ({good, bad, neutral, all}) => {
   return (
     <>
-      <Disaplay text={"good"} value={good}></Disaplay>
-      <Disaplay text={"neutral"} value={neutral}></Disaplay>
-      <Disaplay text={"bad"} value={bad}></Disaplay>
-      <Disaplay text={"all"} value={good + bad + neutral}></Disaplay>
-      <Disaplay text={"average"} value={all == 0 ? 0 : (1*good + 0*neutral + -1*bad)/all}></Disaplay>
-      <Disaplay text={"positive"} value={all == 0 ? 0 :(good/all)*100 + " %"}></Disaplay>
+    <h1>statistics</h1>
+    
+    {
+      all ? 
+      <div>  
+        <Disaplay text={"good"} value={good}></Disaplay>
+        <Disaplay text={"neutral"} value={neutral}></Disaplay>
+        <Disaplay text={"bad"} value={bad}></Disaplay>
+        <Disaplay text={"all"} value={good + bad + neutral}></Disaplay>
+        <Disaplay text={"average"} value={all == 0 ? 0 : (1*good + 0*neutral + -1*bad)/all}></Disaplay>
+        <Disaplay text={"positive"} value={all == 0 ? 0 :(good/all)*100 + " %"}></Disaplay>
+    </div>
+    :
+    <p>No feedback given</p>  
+    
+    }
     </>
   )
 }
@@ -37,7 +47,6 @@ const App = () => {
         <Button text={"good"} onClick={handleGood}></Button>
         <Button text={"neutral"} onClick={handleNeutral}></Button>
         <Button text={"bad"} onClick={handleBad}></Button>
-        <h1>statistics</h1>
         <Statistics good={good} bad={bad} neutral={neutral} all={all}></Statistics>
       </div>
   )
