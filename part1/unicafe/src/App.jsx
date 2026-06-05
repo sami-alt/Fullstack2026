@@ -1,25 +1,27 @@
 import { useState } from 'react'
 
-const StatisticsLine = ({text, value}) => <p>{text} {value}</p>
+const StatisticsLine = ({text, value}) =><tr><td>{text}</td><td>{value}</td></tr>
 
 const Statistics = ({good, bad, neutral, all}) => {
+
   return (
     <>
     <h1>statistics</h1>
-    
     {
-      all ? 
-        <div>  
-          <StatisticsLine text={"good"} value={good}></StatisticsLine>
-          <StatisticsLine text={"neutral"} value={neutral}></StatisticsLine>
-          <StatisticsLine text={"bad"} value={bad}></StatisticsLine>
-          <StatisticsLine text={"all"} value={good + bad + neutral}></StatisticsLine>
-          <StatisticsLine text={"average"} value={all == 0 ? 0 : (1*good + 0*neutral + -1*bad)/all}></StatisticsLine>
-          <StatisticsLine text={"positive"} value={all == 0 ? 0 :(good/all)*100 + " %"}></StatisticsLine>
+      all === 0 ? <p>No feedback given</p>:
+      <div>
+          <table>
+            <tbody>
+              <StatisticsLine text={"good"} value={good}></StatisticsLine>
+              <StatisticsLine text={"neutral"} value={neutral}></StatisticsLine>
+              <StatisticsLine text={"bad"} value={bad}></StatisticsLine>
+              <StatisticsLine text={"all"} value={good + bad + neutral}></StatisticsLine>
+              <StatisticsLine text={"average"} value={all == 0 ? 0 : ((1*good + 0*neutral + -1*bad)/all).toFixed(1)}></StatisticsLine>
+              <StatisticsLine text={"positive"} value={all == 0 ? 0 :((good/all)*100).toFixed(1) + " %"}></StatisticsLine>
+            </tbody>
+          </table>  
         </div>
-        :
-        <p>No feedback given</p>  
-    }
+        }
     </>
   )
 }
