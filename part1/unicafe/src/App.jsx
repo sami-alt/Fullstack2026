@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Disaplay = ({text, value}) => <p>{text} {value}</p>
+const StatisticsLine = ({text, value}) => <p>{text} {value}</p>
 
 const Statistics = ({good, bad, neutral, all}) => {
   return (
@@ -9,17 +9,16 @@ const Statistics = ({good, bad, neutral, all}) => {
     
     {
       all ? 
-      <div>  
-        <Disaplay text={"good"} value={good}></Disaplay>
-        <Disaplay text={"neutral"} value={neutral}></Disaplay>
-        <Disaplay text={"bad"} value={bad}></Disaplay>
-        <Disaplay text={"all"} value={good + bad + neutral}></Disaplay>
-        <Disaplay text={"average"} value={all == 0 ? 0 : (1*good + 0*neutral + -1*bad)/all}></Disaplay>
-        <Disaplay text={"positive"} value={all == 0 ? 0 :(good/all)*100 + " %"}></Disaplay>
-    </div>
-    :
-    <p>No feedback given</p>  
-    
+        <div>  
+          <StatisticsLine text={"good"} value={good}></StatisticsLine>
+          <StatisticsLine text={"neutral"} value={neutral}></StatisticsLine>
+          <StatisticsLine text={"bad"} value={bad}></StatisticsLine>
+          <StatisticsLine text={"all"} value={good + bad + neutral}></StatisticsLine>
+          <StatisticsLine text={"average"} value={all == 0 ? 0 : (1*good + 0*neutral + -1*bad)/all}></StatisticsLine>
+          <StatisticsLine text={"positive"} value={all == 0 ? 0 :(good/all)*100 + " %"}></StatisticsLine>
+        </div>
+        :
+        <p>No feedback given</p>  
     }
     </>
   )
