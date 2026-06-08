@@ -1,8 +1,6 @@
 
 const Header = ({name}) => {
-  console.log(name)
   return (
-
     <h1>{name}</h1>
   )
 }
@@ -38,7 +36,6 @@ const Course = (props) => {
       <Total parts={props.course.parts}></Total>
     </>
   )
-  //console.log(props.course.name)
 }
 
 const Courses = ({courses}) => {
