@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import contactServices from './services/contacts.js'
 import Contacts from './components/contacts'
 import Filter from './components/filter'
 import PersonForm from './components/addPerson'
@@ -13,13 +14,13 @@ const App = () => {
   const [show, setShow] = useState(false)
   
   useEffect(()=> {
-    axios
-      .get("http://localhost:3001/persons")
-      .then(res => setPersons(res.data))
+    contactServices
+      .getAll()
+      .then(response => setPersons(response))
   },[])
   
 
-  
+
 
   return (
     <div>
