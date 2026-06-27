@@ -1,3 +1,4 @@
+import axios from "axios"
 
 const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons}) => {
 
@@ -11,11 +12,17 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
 
   const addContact = () => {
     event.preventDefault()
+    const latest_id = persons.reduce((curr, next) => curr.id < next.id ? next : curr).id
+    console.log(latest_id, "id")
+    const newContact = {name:newName, number:newNumber, id:latest_id + 1}
     if (persons.map(person => person.name).includes(newName)){
       alert(`${newName} is alredy added to phonebook`)
       return
     }
-    setPersons(persons.concat({name:newName, number:newNumber}))
+    axios
+      .post("http://localhost:3001/persons", newContact)
+      .then(response => console.log(response))
+    setPersons(persons.concat(newContact))
     setNewName('')
     setNewNumber('')
   }
