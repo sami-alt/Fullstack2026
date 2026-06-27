@@ -20,8 +20,6 @@ const App = () => {
   },[])
   
 
-
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -29,7 +27,7 @@ const App = () => {
       <h3>add new</h3>
       <PersonForm newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons}></PersonForm>
       <h3>Numbers</h3>
-        <Contacts persons={show ? filteredNames : persons}></Contacts>
+        <Contacts persons={show ? filteredNames : persons} setPersons={setPersons}></Contacts>
     </div>
   )
 }

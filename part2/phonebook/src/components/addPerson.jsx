@@ -19,9 +19,9 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
       return
     }
     
-    const latest_id = persons.reduce((curr, next) => curr.id < next.id ? next : curr).id
+    const latest_id = persons.length === 0 ? 0 : persons.reduce((curr, next) => (curr.id < next.id ? next : curr)).id
     const newContact = {name:newName, number:newNumber, id:String(Number(latest_id) + 1)}
-    
+
     contactServices
       .addContact(newContact)
       .then(response => setPersons(persons.concat(response)))
