@@ -4,13 +4,10 @@ const Contacts = ({persons, setPersons}) => {
 
   const removeContact = ({name, number, id}) => {
     if(window.confirm(`Delete ${name}`)){
-
       contactServices
-      .removeContact(id)
-      .then(response => response)
-      
+        .removeContact(id)
+        .then(response => response)
       const newPersons = persons.filter(person => person.id !== id)
-      console.log(newPersons)
       setPersons(newPersons)
     }
   }

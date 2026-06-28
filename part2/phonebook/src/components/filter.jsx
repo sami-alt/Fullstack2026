@@ -2,7 +2,6 @@
 const Filter = ({setShow, setFilteredNames, persons}) => {
 
     const handleSearch = (event) => {
-        //console.log(show.setShow, 'what')
         let toSearch = event.target.value
         setShow(true)
         if (toSearch.length == 0)

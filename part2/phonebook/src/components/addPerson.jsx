@@ -15,8 +15,20 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
     event.preventDefault()
     
     if (persons.map(person => person.name).includes(newName)){
-      alert(`${newName} is alredy added to phonebook`)
-      return
+      if (window.confirm(`${newName} is alredy added to phonebook, replace old number with new one?`))
+      { 
+        const contactToChange = persons.filter(person => person.name === newName)[0]
+        const newContact = {...contactToChange, number:newNumber}
+        contactServices
+          .updateContactNumber(contactToChange.id, newContact)
+          .then(response =>{
+            setPersons(persons.map(person => person.id === contactToChange.id ? response : person ))
+            })
+
+        setNewName('')
+        setNewNumber('')  
+        return
+      }
     }
     
     const latest_id = persons.length === 0 ? 0 : persons.reduce((curr, next) => (curr.id < next.id ? next : curr)).id
