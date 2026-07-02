@@ -10,10 +10,10 @@ const addContact = (newContact) => {
     const request = axios.post(baseUrl, newContact)
     return request.then(response => response.data)
 }
-z
+
 const updateContactNumber = (id, newNum) => {
     const request = axios.put(`${baseUrl}/${id}`, newNum)
-    return request.then(response => response.data)
+    return request.then(response => [response.data, response.status])
 }
 
 const removeContact = id => {

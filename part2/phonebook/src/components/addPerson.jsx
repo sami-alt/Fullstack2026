@@ -1,7 +1,7 @@
 import axios from "axios"
 import contactServices from "../services/contacts"
 
-const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons}) => {
+const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setPersons, setMessage}) => {
 
     const handleAddName = (event) => {
     setNewName(event.target.value)
@@ -22,7 +22,7 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
         contactServices
           .updateContactNumber(contactToChange.id, newContact)
           .then(response =>{
-            setPersons(persons.map(person => person.id === contactToChange.id ? response : person ))
+            setPersons(persons.map(person => person.id === contactToChange.id ? response[0] : person ))
             })
 
         setNewName('')
@@ -37,7 +37,8 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
     contactServices
       .addContact(newContact)
       .then(response => setPersons(persons.concat(response)))
-    
+
+    setMessage({msg:`${newName} succesfully added to phonebook`, status:"success"})
     setNewName('')
     setNewNumber('')
   }
