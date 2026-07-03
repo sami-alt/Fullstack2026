@@ -1,10 +1,13 @@
 import Country from "./displayCountry"
 
 
-const Countries = ({countries, filtered}) => {
+const Countries = ({countries, filtered, show, setShow}) => {
 
     if (!countries)
         return null
+
+    if (show)
+        return(<Country country={show}></Country>)
 
     if (filtered.length > 0){
         if (filtered.length > 10){
@@ -13,9 +16,9 @@ const Countries = ({countries, filtered}) => {
         if (filtered.length === 1){
             return (<Country country={filtered[0]}></Country>)
         }
-        return (filtered.map((country,i) => <li key={i}>{country.name.common}</li>))
+        return (filtered.map((country,i) => <li key={i}>{country.name.common}<button onClick={()=>setShow(country)}>show</button></li>))
     }
-    return (countries.map((country,i) => <li key={i}>{country.name.common}</li>))
+
 }
 
 export default Countries

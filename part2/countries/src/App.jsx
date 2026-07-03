@@ -8,7 +8,7 @@ import Filter from './components/filterCountries'
 function App() {
   const [countries, setCountries] = useState(null)  
   const [filtered, setFiltered] = useState([])
-  //const [show, setShow] = useState(false)
+  const [show, setShow] = useState(null)
 
   useEffect(()=>{
     countryServices
@@ -20,9 +20,9 @@ function App() {
 
   return (
     <>
-    <h1>App</h1>
-    <Filter countries={countries} filtered={filtered} setFiltered={setFiltered}></Filter>
-    <Countries countries={countries} filtered={filtered}></Countries>
+      <h1>Countries</h1>
+      <Filter countries={countries} filtered={filtered} setFiltered={setFiltered} setShow={setShow}></Filter>
+      <Countries countries={countries} filtered={filtered} show={show} setShow={setShow}></Countries>
     </>
   )
 }
