@@ -15,7 +15,7 @@ function App() {
     .getCountries()
     .then(response => setCountries(response))
     .catch(error => console.log(error))
-    
+
   },[])
 
   return (
