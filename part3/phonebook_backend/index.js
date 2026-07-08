@@ -27,7 +27,14 @@ const testData = [
 ]
 
 app.get('/api/persons', (req, res) => {
+    console.log("bloo")
     res.json(testData)
+})
+
+app.get('/info', (req, res) => {
+    const count = testData.reduce( (acc, next) => acc + 1, 0)
+    const msg = `<p>Phonebook has info for ${count} people</p> ${new Date()}`
+    res.send(msg)
 })
 
 const PORT = 3001
