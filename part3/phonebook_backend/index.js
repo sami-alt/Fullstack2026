@@ -13,6 +13,7 @@ morgan.token('content_length', req => {
 app.use(cors())
 app.use(express.json())
 app.use(morgan(':method :url :status :content_length - :total-time[3] ms :body'))
+app.use(express.static('dist'))
 
 let persons = [
     { 
