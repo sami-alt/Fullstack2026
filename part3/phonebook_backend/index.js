@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 
 
 morgan.token('body', req => {
@@ -9,6 +10,7 @@ morgan.token('body', req => {
 morgan.token('content_length', req => {
     return JSON.stringify(req.res._contentLength)
 })
+app.use(cors())
 app.use(express.json())
 app.use(morgan(':method :url :status :content_length - :total-time[3] ms :body'))
 
@@ -54,7 +56,7 @@ app.get('/info', (req, res) => {
 
 
 app.post('/api/persons', (req, res) => {
-    const person = {"id": 5 /*Math.floor(Math.random()*10000)*/,"name":req.body.name, "number":req.body.number}
+    const person = {"id": String(Math.floor(Math.random()*10000)),"name":req.body.name, "number":req.body.number}
     if ((person.name.length === 0 || person.number.length === 0) || !person.name || !person.number)
         return res.status(400).json({error:'name or number missing!'})
 
@@ -64,11 +66,15 @@ app.post('/api/persons', (req, res) => {
 
     persons = persons.concat(person)
     res.status(201).json(person)
-    
 })
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id
+    const is = persons.find(person => person.id === id)
+    if (!is){
+        console.log("error")
+        return res.status(404).json({error:'name already removed from database'})
+    }
     persons = persons.filter(person => person.id !== id)
     res.status(204).end()
 })
