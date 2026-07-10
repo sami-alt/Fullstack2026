@@ -73,7 +73,6 @@ app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id
     const is = persons.find(person => person.id === id)
     if (!is){
-        console.log("error")
         return res.status(404).json({error:'name already removed from database'})
     }
     persons = persons.filter(person => person.id !== id)
