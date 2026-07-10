@@ -13,3 +13,19 @@ Content-Type: application/json
     "name": "Benedict Cumberbatch",
     "number": "040-434754"
 }
+###
+GET https://fullstack2026-z0do.onrender.com/api/persons
+###
+GET https://fullstack2026-z0do.onrender.com/info
+###
+GET https://fullstack2026-z0do.onrender.com/api/persons/4
+###
+DELETE https://fullstack2026-z0do.onrender.com/api/persons/5
+###
+POST https://fullstack2026-z0do.onrender.com/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Benedict Cumberbatch",
+    "number": "040-434754"
+}
