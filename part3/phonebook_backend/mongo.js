@@ -7,19 +7,10 @@ if (process.argv.length < 3){
 }
    
 
-const password = process.argv[2]
-const url = `mongodb+srv://fullstack_db_user:${password}@fullstackdb.fcfd0ht.mongodb.net/phonebookApp`
+//const password = process.argv[2]
+//const url = `mongodb+srv://fullstack_db_user:${password}@fullstackdb.fcfd0ht.mongodb.net/phonebookApp`
 
-mongoose.set('strictQuery', false)
 
-mongoose.connect(url,{family:4})
-
-const constactSchema = new mongoose.Schema({
-    name:String,
-    number:String
-})
-
-const Contact = mongoose.model('Contact', constactSchema)
 
 if (process.argv.length === 3)
 {   
