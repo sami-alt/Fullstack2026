@@ -9,13 +9,13 @@
     "test": "echo 'test'",
     "build:ui": "rm -rf dist && cd ../phonebook && npm run build && cp -r dist ../phonebook_backend",
     "deploy:full": "npm run build:ui && cd ../.. && git add part3/phonebook_backend/. && git commit -m uibuild && git push"
-
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "mongoose": "^9.7.4",
     "morgan": "^1.11.0"
   }
 }
