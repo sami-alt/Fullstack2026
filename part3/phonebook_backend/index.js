@@ -71,22 +71,24 @@ app.post('/api/persons', (req, res) => {
 
     persons = persons.concat(contact)
 
-    contact.save().then(
-            result => {
-                console.log('contact saved to db')
-            }
-    )
-    res.status(201).json(contact)
+    contact.save()
+    .then(
+            result => {res.status(201).json(contact)
+    })
+    .catch(error => console.log(error))
+    
 })
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id
-    const is = persons.find(person => person.id === id)
-    if (!is){
-        return res.status(404).json({error:'name already removed from database'})
-    }
-    persons = persons.filter(person => person.id !== id)
-    res.status(204).end()
+    Contact.findByIdAndDelete(id)
+    .then(result => {
+        if (!result)
+            return res.status(404).json({error:'name already removed from database'})
+        else
+            res.status(204).end()
+    })
+    .catch(error => console.log(error))
 })
 
 const PORT = process.env.PORT

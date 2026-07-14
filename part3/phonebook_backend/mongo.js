@@ -1,17 +1,10 @@
 const mongoose = require('mongoose')
 
-
 if (process.argv.length < 3){
     console.log("give password as argument")
     process.exit(1)
 }
    
-
-//const password = process.argv[2]
-//const url = `mongodb+srv://fullstack_db_user:${password}@fullstackdb.fcfd0ht.mongodb.net/phonebookApp`
-
-
-
 if (process.argv.length === 3)
 {   
     console.log("Phonebook:")
@@ -34,6 +27,6 @@ if (process.argv.length === 5){
             console.log('contact saved to db')
             mongoose.connection.close()
         }
-)
+    )
 }
 
