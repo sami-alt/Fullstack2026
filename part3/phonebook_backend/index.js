@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
 const Contact = require('./modules/contact')
+const contact = require('./modules/contact')
 
 
 morgan.token('body', req => {
@@ -63,6 +64,25 @@ app.get('/info', (req, res) => {
 })
 */
 
+app.put('/api/persons/:id', (req, res, next) => {
+    const {name, number} = req.body
+    const id = req.params.id
+    console.log(name, number)
+    
+    Contact.findById(id)
+    .then(contact => {
+        if (!contact)
+                return res.status(404).end()
+        contact.name = name
+        contact.number = number
+            
+        return contact.save().then(update => {
+            res.json(update)
+        })  
+    })
+    .catch(error => next(error))
+            
+})
 
 app.post('/api/persons', (req, res, next) => {
     const  contact = new Contact({"name":req.body.name, "number":req.body.number})
