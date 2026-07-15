@@ -24,6 +24,7 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
           .then(response =>{
             setPersons(persons.map(person => person.id === contactToChange.id ? response[0] : person ))
             })
+          .catch(error => setMessage({msg:error.response.data.error, status:'error'}))
 
         setNewName('')
         setNewNumber('')  
@@ -33,13 +34,19 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
     
     const latest_id = persons.length === 0 ? 0 : persons.reduce((curr, next) => (curr.id < next.id ? next : curr)).id
     const newContact = {name:newName, number:newNumber}
-    //, id:String(Number(latest_id) + 1)
+  
 
     contactServices
       .addContact(newContact)
-      .then(response => setPersons(persons.concat(response)))
+      .then(response => {
+        setPersons(persons.concat(response))
+        setMessage({msg:`${newName} succesfully added to phonebook`, status:"success"})
+      })
+      .catch(error => {
+        console.log('error in add', error.response)
+        setMessage({msg:error.response.data.error, status:'error'})
+      })
 
-    setMessage({msg:`${newName} succesfully added to phonebook`, status:"success"})
     setNewName('')
     setNewNumber('')
   }

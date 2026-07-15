@@ -8,9 +8,7 @@ const Filter = ({setShow, setFilteredNames, persons}) => {
             setShow(false)
         let filtered = persons.filter(person => person.name.toLowerCase().includes(toSearch.toLowerCase()))
         if (persons.filter(person => person.name.toLowerCase() === toSearch.toLowerCase()).length === 1){
-            //console.log(persons.filter(person => person.name.toLowerCase() === toSearch.toLowerCase()))
             filtered = persons.filter(person => person.name.toLowerCase() === toSearch.toLowerCase())
-            //console.log("aaa")
             setFilteredNames(filtered)
             return
         }
