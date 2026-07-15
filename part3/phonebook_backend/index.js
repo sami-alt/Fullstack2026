@@ -32,8 +32,9 @@ app.use(morgan(':method :url :status :content_length - :total-time[3] ms :body')
 const errorHandler = (error, req, res, next) => {
     console.log(error)
     if (error.name === 'CastError'){
-        return response.status(400).send({error: 'malformed id'})
-    }
+        return res.status(400).send({error: 'malformed id'})
+    } else if (error.name === 'ValidationError')
+        return res.status(400).json({error:error.message})
     next(error)
 }
 
@@ -48,26 +49,31 @@ app.get('/api/persons', (req, res, next) => {
     .catch(error => next(error))
 })
 
-/*
+
 app.get('/api/persons/:id', (req, res, next) => {
     const id = req.params.id
-    const person = Contact.findById(id)
-    if (person)
-    res.json(person)
-    else
-        res.status(404).end()
+    Contact.findById(id)
+    .then(result => {
+        if (result)
+            res.json(result)
+        else
+            res.status(404).end()
+    })
+    .catch(error => next(error))
 })
 
 app.get('/info', (req, res) => {
-    const count = persons.reduce( (acc, next) => acc + 1, 0)
-    res.send(`<p>Phonebook has info for ${count} people</p> ${new Date()}`)
+    Contact.find({})
+    .then(result => {
+        res.send(`<p>Phonebook has info for ${result.length} people</p> ${new Date()}`)
+    })
+    .catch(error => next(error))
 })
-*/
+
 
 app.put('/api/persons/:id', (req, res, next) => {
     const {name, number} = req.body
     const id = req.params.id
-    console.log(name, number)
     
     Contact.findById(id)
     .then(contact => {
@@ -86,8 +92,6 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 app.post('/api/persons', (req, res, next) => {
     const  contact = new Contact({"name":req.body.name, "number":req.body.number})
-    if ((contact.name.length === 0 || contact.number.length === 0) || !contact.name || !contact.number)
-        return res.status(400).json({error:'name or number missing!'})
 
     contact.save()
     .then(
