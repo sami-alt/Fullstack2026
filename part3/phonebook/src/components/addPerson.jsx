@@ -43,7 +43,6 @@ const PersonForm = ({newName, setNewName, newNumber, setNewNumber, persons, setP
         setMessage({msg:`${newName} succesfully added to phonebook`, status:"success"})
       })
       .catch(error => {
-        console.log('error in add', error.response)
         setMessage({msg:error.response.data.error, status:'error'})
       })
 
