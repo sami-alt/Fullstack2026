@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "title":"test3",
+    "author":"you",
+    "ulr":"www.blogs.fi/my_blog1",
+    "likes":6
+}
+
+###
+
+GET http://localhost:3003/api/blogs
