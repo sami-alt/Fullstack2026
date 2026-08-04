@@ -1,112 +1,111 @@
 const assert = require('assert')
-const {test, beforeEach, after, describe} = require('node:test')
+const { test, beforeEach, after, describe } = require('node:test')
 const mongoose = require('mongoose')
-const supertest = require('supertest')
-const app = require('../app')
 const utils = require('./test_utils')
 const Blog = require('../models/blog')
-const blogsRouter = require('../controllers/blogs')
-const { before } = require('lodash')
-const config = require('../utils/config')
+const supertest = require('supertest')
+const app = require('../app')
 const api = supertest(app)
 
 
 
-beforeEach(async ()=> {
-    await Blog.deleteMany({})
-    await Blog.insertMany(utils.testBlogs)
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  await Blog.insertMany(utils.testBlogs)
 })
 
-describe('Initial DB tests', async ()=> {
-    test("Correct amount of posts from db and Content-type JSON", async ()=> {
-        const posts = await api.get('/api/blogs')
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
+describe('Initial DB tests', async () => {
+  test('Correct amount of posts from db and Content-type JSON', async () => {
+    const posts = await api.get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
 
-        assert.strictEqual(posts.body.length, 4)
-    })
+    assert.strictEqual(posts.body.length, 4)
+  })
 
-    test('check id attribute of blog object', async ()=> {
-        const post = (await api.get('/api/blogs')).body[0]
-        assert.strictEqual(post.hasOwnProperty('id'), true)
-    }) 
-     
-    test('adding post to db', async ()=>{
-        const testPost = {   
-            title:"Latest blog",
-            author:"T. ester",
-            url:"www.fromTheFuture.fu",
-            likes:4
-        }
+  test('check id attribute of blog object', async () => {
+    const post = (await api.get('/api/blogs')).body[0]
+    const hasId = post.hasOwnProperty('id')
+    assert.strictEqual(hasId, true)
+  })
 
-        await api.post('/api/blogs')
-        .send(testPost)
-        .expect(201)
-        .expect('Content-Type', /application\/json/)
-        
-        const posts = (await api.get('/api/blogs')).body.length
-        
-        assert.strictEqual(posts, 5)
-        
-    })
-    
-    test('has likes property if not then default to 0', async () => {
-        const testPost = {   
-            title:"Latest blog",
-            author:"T. ester",
-            url:"www.fromTheFuture.fu",
-        }
+  test('adding post to db', async () => {
+    const testPost = {
+      title:'Latest blog',
+      author:'T. ester',
+      url:'www.fromTheFuture.fu',
+      likes:4
+    }
 
-        const created = await api.post('/api/blogs')
-        .send(testPost)
-        .expect(201)
-            .expect('Content-Type', /application\/json/)
+    await api.post('/api/blogs')
+      .send(testPost)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
 
-        assert.strictEqual(created.body.hasOwnProperty('likes'), true)
-    })
+    const posts = (await api.get('/api/blogs')).body.length
 
-    test('has title and url properties else status 400', async () => {
-        const testPost = {   
-            author:"T. ester",
-            likes: 4
-        }
-        
-        const created = await api.post('/api/blogs')
-            .send(testPost)
-            .expect(400)
+    assert.strictEqual(posts, 5)
 
-    })
+  })
 
-    test('post can be deleted from db', async ()=> {
-        const initPosts = (await api.get('/api/blogs').expect(200).expect('Content-Type', /application\/json/)).body
-    
-        const blogsBefore = initPosts.length
-        const postToDelete = initPosts[0]
-        await api.delete(`/api/blogs/${postToDelete.id}`).expect(204)
-        const blogsAfter = (await api.get('/api/blogs').expect(200)).body.length
-        
-        assert.strictEqual(blogsAfter, (blogsBefore - 1))
-    })
-    
+  test('has likes property if not then default to 0', async () => {
+    const testPost = {
+      title:'Latest blog',
+      author:'T. ester',
+      url:'www.fromTheFuture.fu',
+    }
 
-    test('update post in db', async ()=> {
-        const toUpdate = (await api.get('/api/blogs')).body[0]
+    const created = await api.post('/api/blogs')
+      .send(testPost)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
 
-        const updated = {
-            title: 'Test for blog apps',
-            author: 'B. Virtanen',
-            url: 'www.bvirta.fi',
-            likes: 0,
-        }
+    const hasLikes = created.body.hasOwnProperty('likes')
+    assert.strictEqual(hasLikes, true)
+  })
 
-        const back = (await api.put(`/api/blogs/${toUpdate.id}`)
-            .send(updated)).body
-        
+  test('has title and url properties else status 400', async () => {
+    const testPost = {
+      author:'T. ester',
+      likes: 4
+    }
 
-        const check = (await api.get('/api/blogs')).body[0]
-        
-        assert.strictEqual(check.likes, 0)
-    })
+    await api.post('/api/blogs')
+      .send(testPost)
+      .expect(400)
+
+  })
+
+  test('post can be deleted from db', async () => {
+    const initPosts = (await api.get('/api/blogs').expect(200).expect('Content-Type', /application\/json/)).body
+
+    const blogsBefore = initPosts.length
+    const postToDelete = initPosts[0]
+    await api.delete(`/api/blogs/${postToDelete.id}`).expect(204)
+    const blogsAfter = (await api.get('/api/blogs').expect(200)).body.length
+
+    assert.strictEqual(blogsAfter, (blogsBefore - 1))
+  })
+
+
+  test('update post in db', async () => {
+    const toUpdate = (await api.get('/api/blogs')).body[0]
+
+    const updated = {
+      title: 'Test for blog apps',
+      author: 'B. Virtanen',
+      url: 'www.bvirta.fi',
+      likes: 0,
+    }
+
+    const back = (await api.put(`/api/blogs/${toUpdate.id}`)
+      .send(updated)).body
+
+
+    const check = (await api.get('/api/blogs')).body[0]
+
+    assert.strictEqual(check.likes, 0)
+  })
 
 })
 
