@@ -7,11 +7,11 @@ const middleware = require('./utils/middleware')
 
 const app = express()
 
-//const mongoUrl = process.env.MONGO_DB_URI
 
 mongoose.connect(config.MONGO_DB_URI, { family: 4 })
-  .then(() => logger.info('Connected to MongoDB'))
-  .catch(error => logger.error(error))
+.then(() => logger.info('Connected to MongoDB'))
+.catch(error => logger.error(error))
+
 
 app.use(express.json())
 app.use(middleware.requestLogger)

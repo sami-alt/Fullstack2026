@@ -10,4 +10,32 @@ Content-Type: application/json
 
 ###
 
+DELETE http://localhost:3003/api/blogs/6a63ca9d87f3d795b26f6026
+###
 GET http://localhost:3003/api/blogs
+
+###
+PUT http://localhost:3003/api/blogs/6a63a4b9eb3f2fc850e180ec HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Learning REST Client",
+  "author": "John Smith",
+  "url": "https://example.com/blog",
+  "likes": 42
+}
+
+###
+
+GET http://127.0.0.1:3003/api/blogs
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Local test2",
+  "author": "Sami",
+  "url": "http://example.com",
+  "likes": 5
+}
