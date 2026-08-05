@@ -32,21 +32,22 @@ GET http://127.0.0.1:3003/api/blogs
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5CI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzJmNmMyMGZjYTczOTNkYmQ1YzRhNiIsImlhdCI6MTc4NTkyMTczOH0._MfTEoJzWnxgC2lM9on0-89MKYjhcq_ITRPAYCaLpsk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzJmNmMyMGZjYTczOTNkYmQ1YzRhNiIsImlhdCI6MTc4NTkyMTczOH0._MfTEoJzWnxgC2lM9on0-89MKYjhcq_ITRPAYCaLpsk
 
 {
-  "title": "Local test3",
+  "title": "Muutui",
   "author": "Sami",
   "url": "http://example.com",
   "likes": 5
 }
 
 ###
-PUT http://localhost:3003/api/blogs/6a72f7987e0b48938f48e076
+PUT http://localhost:3003/api/blogs/6a7304fe32afb3629c328232
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzJmNmMyMGZjYTczOTNkYmQ1YzRhNiIsImlhdCI6MTc4NTkyMTczOH0._MfTEoJzWnxgC2lM9on0-89MKYjhcq_ITRPAYCaLpsk
 
 {
-  "title": "Nimi muuttui",
+  "title": "5",
   "author": "Sami",
   "url": "http://example.com",
   "likes": 5
