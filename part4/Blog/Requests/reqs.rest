@@ -48,7 +48,16 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "Sapi",
-  "name": "Sami",
+  "username": "TestiKäyttäjä",
+  "name": "Tepa",
+  "password": "salana"
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "TestiKäyttäjä",
   "password": "salana"
 }
