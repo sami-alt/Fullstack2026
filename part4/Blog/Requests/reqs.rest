@@ -34,7 +34,7 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Local test2",
+  "title": "Local test3",
   "author": "Sami",
   "url": "http://example.com",
   "likes": 5
@@ -48,7 +48,7 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "Sami Räihä",
+  "username": "Sapi",
   "name": "Sami",
-  "password": "salasana"
+  "password": "salana"
 }

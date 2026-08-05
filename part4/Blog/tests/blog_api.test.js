@@ -3,6 +3,7 @@ const { test, beforeEach, after, describe } = require('node:test')
 const mongoose = require('mongoose')
 const utils = require('./test_utils')
 const Blog = require('../models/blog')
+const User = require('../models/users')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
@@ -10,6 +11,9 @@ const api = supertest(app)
 
 
 beforeEach(async () => {
+  //const owner = new User ({username:'The Owner', name: 'owner', passwordHash:'adwecserw342qdr'})
+  await User.deleteMany({})
+  await User.insertOne({username:'The Owner', name: 'owner', passwordHash:'adwecserw342qdr'})
   await Blog.deleteMany({})
   await Blog.insertMany(utils.testBlogs)
 })

@@ -5,9 +5,12 @@ const user = require('../models/users')
 
 usersRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body
+
+  if (password.length < 3)
+    return res.status(400).json({error: 'name and password need to be atleast 3 characthers long'})
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
-  console.log(passwordHash)
   const userToBeAdded = new user({
     username,
     name,
@@ -21,7 +24,7 @@ usersRouter.post('/', async (req, res) => {
 })
 
 usersRouter.get('/', async (req, res) => {
-    const users = await user.find({})
+    const users = await user.find({}).populate('blogs')
     res.json(users)
 })
 
