@@ -2,8 +2,9 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/users')
 const jwt = require('jsonwebtoken')
+const { userExtractor } = require('../utils/middleware')
 
-
+//reduntant
 const getTokenFrom = req => {
   const authorization = req.get('authorization')
   if (authorization && authorization.startsWith('Bearer ')) {
@@ -17,7 +18,7 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', userExtractor ,async (request, response) => {
   const body = request.body
 
   console.log('token', request.token)
@@ -27,7 +28,7 @@ blogsRouter.post('/', async (request, response) => {
     return response.status(401).json({ error: 'token invalid'})
   }
 
-  const owner = await User.findById(decodedToken.id)
+  const owner = await User.findById(request.user.id)
   if (!body.title || !body.url)
     return response.status(400).end()
 
@@ -47,7 +48,7 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(newBlog)
 })
 
-blogsRouter.delete('/:id', async (request, response ) => {
+blogsRouter.delete('/:id', userExtractor ,async (request, response ) => {
   const id = request.params.id
   
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -57,7 +58,7 @@ blogsRouter.delete('/:id', async (request, response ) => {
   
   const blogToDelete = await Blog.findById(id)
   console.log(blogToDelete)
-  if (blogToDelete.user.toString() !== decodedToken.id.toString())
+  if (blogToDelete.user.toString() !== request.user.id)
     return response.status(401).json({error: "user not creator of the post"})
   
   await Blog.findByIdAndDelete(id)
