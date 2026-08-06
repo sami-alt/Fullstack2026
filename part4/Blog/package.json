@@ -10,7 +10,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": " NODE_ENV=development node --watch index.js",
     "dev-local": "NODE_ENV=dev-local node --watch index.js",
-    "test": "NODE_ENV=test node --test-concurrency=1",
+    "test": "NODE_ENV=test node --test --test-concurrency=1",
     "test-local": "NODE_ENV=test-local node --test --test-concurrency=1",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
