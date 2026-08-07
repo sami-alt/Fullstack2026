@@ -9,17 +9,15 @@ const middleware = require('./utils/middleware')
 
 const app = express()
 
-
 mongoose.connect(config.MONGO_DB_URI, { family: 4 })
   .then(() => logger.info('Connected to MongoDB'))
   .catch(error => logger.error(error))
-
 
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
-app.use('/api/login',middleware.userExtractor ,loginRouter)
+app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 

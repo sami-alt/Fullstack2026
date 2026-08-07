@@ -21,12 +21,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc
 }
 
 ###
-PUT http://localhost:3003/api/blogs/6a74704ce201e7d3722f288b
+PUT http://localhost:3003/api/blogs/6a74806ea091d861a60b9bbc
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QyIiwiaWQiOiI2YTc0N2FmODhiYWQyMmViZjY1MDdhMGMiLCJpYXQiOjE3ODYwMjAzMTJ9.gvJ6YLq7C4lGh6iIbE0Gc2r1_S5LT5hhjtPejvnDARA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzQ3YWJkOGJhZDIyZWJmNjUwN2EwYSIsImlhdCI6MTc4NjAyMzQzN30.jQ9pcH1wTT7ZrrHSELwo9lEdvLDDymr1NdU6f30rzNc
 
 {
-  "title": "5",
+  "title": "Test blog vol.67",
   "author": "Sami",
   "url": "http://example.com",
   "likes": 5
