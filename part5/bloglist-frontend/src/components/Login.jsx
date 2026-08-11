@@ -14,11 +14,10 @@ const Login = ({user, setUser}) => {
         setPassword(event.target.value)
     }
 
-    console.log(username ,password)
     const loginAction = async () => {
         event.preventDefault()
         const user = await loginServices.login({username:username, password:password})
-        //console.log('user',user)
+        window.localStorage.setItem('loggedInUser', JSON.stringify(user)) 
         setUser(user)
     }
 

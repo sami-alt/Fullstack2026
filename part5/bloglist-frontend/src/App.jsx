@@ -13,6 +13,11 @@ const App = () => {
       const blogs = await blogsServices.getAll()
       setBlogs(blogs) 
     } 
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
     getBlogs()
   }, [])
   
@@ -21,12 +26,13 @@ const App = () => {
   const loggedIn = (blogs) => {
     return (
     <>
-      <Blogs blogs={blogs} user={user}/>
+      <Blogs blogs={blogs} user={user} setUser={setUser}/>
     </>
   )
   }
 
   const notLoggedIn = (user) => {
+    console.log('logged out',window.localStorage.getItem('loggedInUser'))
     return (<Login user={user} setUser={setUser}/>)
   }
 
