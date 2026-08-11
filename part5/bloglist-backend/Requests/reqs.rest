@@ -1,0 +1,87 @@
+
+###Delete all blogs
+DELETE  http://127.0.0.1:3003/api/blogs
+
+
+
+
+###
+GET http://127.0.0.1:3003/api/blogs
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzQ2ZmRjZTIwMWU3ZDM3MjJmMjg4YSIsImlhdCI6MTc4NjA5NDg3NCwiZXhwIjoxNzg2MDk4NDc0fQ._i2C_O7KdKow6v91iL9z0Xqwgi6_o_xnlvyz2bT-6rc
+
+{
+  "title": "Test blog vol.3",
+  "author": "Sami",
+  "url": "http://example.com",
+  "likes": 0
+}
+
+###
+PUT http://localhost:3003/api/blogs/6a74806ea091d861a60b9bbc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QiLCJpZCI6IjZhNzQ3YWJkOGJhZDIyZWJmNjUwN2EwYSIsImlhdCI6MTc4NjAyMzQzN30.jQ9pcH1wTT7ZrrHSELwo9lEdvLDDymr1NdU6f30rzNc
+
+{
+  "title": "Test blog vol.67",
+  "author": "Sami",
+  "url": "http://example.com",
+  "likes": 5
+}
+###
+
+DELETE http://localhost:3003/api/blogs/6a748b943921e0934bbe5019
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RpS8OkeXR0w6Rqw6QyIiwiaWQiOiI2YTc0N2FmODhiYWQyMmViZjY1MDdhMGMiLCJpYXQiOjE3ODYwMjAzMTJ9.gvJ6YLq7C4lGh6iIbE0Gc2r1_S5LT5hhjtPejvnDARA
+
+###
+GET http://127.0.0.1:3003/api/users
+
+### Test user accounts
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "TestiKäyttäjä",
+  "name": "Tepa",
+  "password": "salana"
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{  
+  "username": "TestiKäyttäjä",
+  "password": "salana"
+}
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "TestiKäyttäjä2",
+  "name": "Pate",
+  "password": "salana2"
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{  
+  "username": "TestiKäyttäjä2",
+  "password": "salana2"
+}
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "test",
+  "name": "test",
+  "password": "test"
+}

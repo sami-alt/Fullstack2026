@@ -1,0 +1,31 @@
+const mongoose = require('mongoose')
+
+const userSchema = mongoose.Schema({
+  blogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog'
+    }
+  ],
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minLength: 3
+  },
+  name:String,
+  passwordHash: String,
+})
+
+userSchema.set('toJSON', {
+  transform: (document, returnObject) => {
+    returnObject.id = returnObject._id.toString()
+    delete returnObject._id
+    delete returnObject.__v
+    delete returnObject.passwordHash
+  }
+})
+
+
+
+module.exports = mongoose.model('User', userSchema)
