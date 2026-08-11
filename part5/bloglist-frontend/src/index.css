@@ -1,0 +1,25 @@
+.success{
+    color: green;
+    background-color: lightgreen;
+    height: 50px;
+    border:2px solid green;
+    border-radius: 6px;
+}
+
+.success p {
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.error{
+    color: darkred;
+    background-color: lightcoral;
+    height: 50px;
+    border:2px solid red;
+    border-radius: 6px;
+}
+
+.error p {
+    margin-top: 15px;
+    margin-left: 20px;
+}

@@ -28,7 +28,7 @@ blogsRouter.post('/', userExtractor ,async (request, response) => {
 
   const owner = await User.findById(request.user.id)
   if (!body.title || !body.url)
-    return response.status(400).end()
+    return response.status(400).json({error: 'request body missing content'})
 
   const blog = new Blog({
     title:body.title,

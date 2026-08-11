@@ -4,12 +4,15 @@ import Blogs from './components/Blogs'
 import Login from './components/Login'
 import blogsServices from './services/blogsServices'
 import AddBlog from './components/AddBlog'
+import Message from './components/Message'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
+  const [message, setMessage] = useState(null)
 
+  
   useEffect(() => {
     const getBlogs = async () => {
       const blogs = await blogsServices.getAll()
@@ -25,25 +28,30 @@ const App = () => {
   
 
 
-  const loggedIn = (blogs) => {
-    console.log(token)
+  const LoggedIn = ({blogs, setBlogs, user, setUser, message, setMessage}) => {
     return (
     <>
-      <AddBlog/>
-      <Blogs blogs={blogs} user={user} setUser={setUser}/>
+      <Message message={message} setMessage={setMessage}></Message>
+      <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs}/>
+      <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage}/>
     </>
   )
   }
 
-  const notLoggedIn = (user) => {
-    //console.log('logged out',window.localStorage.getItem('loggedInUser'))
-    return (<Login user={user} setUser={setUser} setToken={setToken}/>)
+  const NotLoggedIn = ({user, setUser, message, setMessage, setToken}) => {
+    
+    return (
+    <>
+      <Message message={message} setMessage={setMessage}></Message>
+      <Login user={user} setUser={setUser} setToken={setToken} setMessage={setMessage}/>
+    </>
+  )
   }
 
 
   return (
     <>
-      {user ? loggedIn(blogs) : notLoggedIn(user)}
+      {user ? <LoggedIn blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser} message={message} setMessage={setMessage}/> : <NotLoggedIn user={user} setUser={setUser} message={message} setMessage={setMessage} setToken={setToken}/>}
     </>
   )
 }

@@ -2,7 +2,7 @@ import { useState } from "react"
 import loginServices from "../services/loginServices"
 import blogsServices from "../services/blogsServices"
 
-const Login = ({user, setUser, setToken}) => {
+const Login = ({user, setUser, setToken, setMessage}) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -17,10 +17,15 @@ const Login = ({user, setUser, setToken}) => {
 
     const loginAction = async () => {
         event.preventDefault()
-        const user = await loginServices.login({username:username, password:password})
-        window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-        blogsServices.setToken(user.token)
-        setUser(user)
+        try{
+            const user = await loginServices.login({username:username, password:password})
+            blogsServices.setToken(user.token)
+            window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+            setUser(user)
+            setMessage({msg:'Logged in', status:'success'})
+        }catch(error){
+            setMessage({msg:error.response.data.error, status:'error'})
+        }
     }
 
 
