@@ -41,7 +41,7 @@ const App = () => {
     <>
       <Message message={message} setMessage={setMessage}></Message>
       <h2>Blogs</h2>
-      {user.name}<br/>
+      {user.name}
       <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({msg:'Logged out',status:'success'}) }}>logout</button><br/>
       <button onClick={()=> setVisible(true)}>Add blog post</button>     
       <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible} createBlog={addBlog}/>
