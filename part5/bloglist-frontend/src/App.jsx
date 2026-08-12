@@ -11,7 +11,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [message, setMessage] = useState(null)
-
+  const [visible, setVisible] = useState(false)
   
   useEffect(() => {
     const getBlogs = async () => {
@@ -32,14 +32,17 @@ const App = () => {
     return (
     <>
       <Message message={message} setMessage={setMessage}></Message>
-      <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs}/>
+      <h2>Blogs</h2>
+      {user.name}<br/>
+      <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({msg:'Logged out',status:'success'}) }}>logout</button><br/>
+      <button onClick={()=> setVisible(true)}>Add blog post</button>     
+      <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible}/>
       <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage}/>
     </>
   )
   }
 
   const NotLoggedIn = ({user, setUser, message, setMessage, setToken}) => {
-    
     return (
     <>
       <Message message={message} setMessage={setMessage}></Message>

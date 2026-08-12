@@ -1,10 +1,12 @@
 import { useState } from "react"
 import blogsServices from "../services/blogsServices"
 
-const AddBlog = ({setMessage, blogs ,setBlogs}) => {
+const AddBlog = ({setMessage, blogs ,setBlogs, visible, setVisible}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+
+    const hide = {display: visible ? '' : 'none'}
 
     const handleTitle = (event) => {
         setTitle(event.target.value)
@@ -28,21 +30,33 @@ const AddBlog = ({setMessage, blogs ,setBlogs}) => {
            const newBlog = await blogsServices.addBlog({title:title, author:author ,url:url})
            setBlogs(blogs.concat(newBlog))
            setMessage({msg:'Blog post added', status:'success'})
+           setVisible(false)
         }catch(error){
             setMessage({msg:error.response.data.error, status:'error'})
         }
     }
 
+    const handleCancel = () => {
+        setVisible(false)
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+    }
+
     return (
-        <form onSubmit={newBlog}>
-            title
-            <input onChange={handleTitle}></input><br/>
-            author
-            <input onChange={handleAuthor}></input><br/>
-            url
-            <input onChange={handleUrl}></input><br/>
-            <button type="submit">Add post about blog</button>
-        </form>
+        <div style={hide}>
+            <h2>create new post</h2>
+            <form onSubmit={newBlog}>
+                title
+                <input onChange={handleTitle}></input><br/>
+                author
+                <input onChange={handleAuthor}></input><br/>
+                url
+                <input onChange={handleUrl}></input><br/>
+                <button type="submit">Add post</button>
+                <button onClick={handleCancel}>Cancel</button>
+            </form>
+        </div>
     )
 }
 
