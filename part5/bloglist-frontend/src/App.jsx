@@ -26,7 +26,15 @@ const App = () => {
     getBlogs()
   }, [])
   
-
+  const addBlog = async (newPost) => {
+      try{
+           const newBlog = await blogsServices.addBlog(newPost)
+           setBlogs(blogs.concat(newBlog))
+           setMessage({msg:'Blog post added', status:'success'})
+        }catch(error){
+            setMessage({msg:error.response.data.error, status:'error'})
+        }
+  }
 
   const LoggedIn = ({blogs, setBlogs, user, setUser, message, setMessage}) => {
     return (
@@ -36,7 +44,7 @@ const App = () => {
       {user.name}<br/>
       <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({msg:'Logged out',status:'success'}) }}>logout</button><br/>
       <button onClick={()=> setVisible(true)}>Add blog post</button>     
-      <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible}/>
+      <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible} createBlog={addBlog}/>
       <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage}/>
     </>
   )

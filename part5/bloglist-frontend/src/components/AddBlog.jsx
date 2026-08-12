@@ -1,7 +1,7 @@
 import { useState } from "react"
 import blogsServices from "../services/blogsServices"
 
-const AddBlog = ({setMessage, blogs ,setBlogs, visible, setVisible}) => {
+const AddBlog = ({setMessage, blogs ,setBlogs, visible, setVisible, createBlog}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -26,14 +26,8 @@ const AddBlog = ({setMessage, blogs ,setBlogs, visible, setVisible}) => {
             setMessage({msg: 'title, author or length can not be empty', status:'error'})
             return
         }
-        try{
-           const newBlog = await blogsServices.addBlog({title:title, author:author ,url:url})
-           setBlogs(blogs.concat(newBlog))
-           setMessage({msg:'Blog post added', status:'success'})
-           setVisible(false)
-        }catch(error){
-            setMessage({msg:error.response.data.error, status:'error'})
-        }
+        createBlog({title:title, author:author ,url:url})
+        setVisible(false)
     }
 
     const handleCancel = () => {
