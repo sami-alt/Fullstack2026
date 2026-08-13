@@ -19,6 +19,7 @@ const Login = ({user, setUser, setToken, setMessage}) => {
         event.preventDefault()
         try{
             const user = await loginServices.login({username:username, password:password})
+            //console.log(user.token)
             blogsServices.setToken(user.token)
             window.localStorage.setItem('loggedInUser', JSON.stringify(user))
             setUser(user)

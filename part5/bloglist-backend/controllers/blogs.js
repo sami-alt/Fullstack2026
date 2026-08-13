@@ -71,16 +71,18 @@ blogsRouter.delete('/', async (req,res) => {
 
 blogsRouter.put('/:id', userExtractor,async (request, response) => {
   const { author, title ,url, likes } = request.body
-
+  /*
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
-  const toBeUpdated = await Blog.findById(request.params.id)
-
+  
+  /
   if (toBeUpdated.user.toString() !== request.user.id)
-    return response.status(401).json({ error: 'user not creator of the post' })
-
+  return response.status(401).json({ error: 'user not creator of the post' })
+  */
+ 
+  const toBeUpdated = await Blog.findById(request.params.id)
   if (!toBeUpdated)
     return response.status(404).end()
 

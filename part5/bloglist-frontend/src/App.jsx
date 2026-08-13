@@ -19,6 +19,8 @@ const App = () => {
       setBlogs(blogs) 
     } 
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON)
+        setToken(token)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -28,12 +30,26 @@ const App = () => {
   
   const addBlog = async (newPost) => {
       try{
-           const newBlog = await blogsServices.addBlog(newPost)
-           setBlogs(blogs.concat(newBlog))
+        const newBlog = await blogsServices.addBlog(newPost)
+        const newObj = {...newBlog, user:{name:user.name}}
+           setBlogs(blogs.concat(newObj))
            setMessage({msg:'Blog post added', status:'success'})
         }catch(error){
             setMessage({msg:error.response.data.error, status:'error'})
         }
+  }
+
+  const updateLikes = async (updatedPost, id) => {
+    try{
+      const updated = await blogsServices.updateBlog(updatedPost, id)
+      const user = blogs.filter(blog => blog.id === updated.id)[0].user.name
+      console.log('user',user)
+      console.log('updated',{...updated, user:{name:user}})
+      setBlogs(blogs.filter(blog => blog.id !== updated.id).concat({...updated, user:{name:user}}))
+      setMessage({msg:'Liked', status:'success'})
+    }catch(error){
+      setMessage({msg:error.response.data.error, status:'error'})
+    }
   }
 
   const LoggedIn = ({blogs, setBlogs, user, setUser, message, setMessage}) => {
@@ -45,7 +61,7 @@ const App = () => {
       <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({msg:'Logged out',status:'success'}) }}>logout</button><br/>
       <button onClick={()=> setVisible(true)}>Add blog post</button>     
       <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible} createBlog={addBlog}/>
-      <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage}/>
+      <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage} like={updateLikes}/>
     </>
   )
   }
