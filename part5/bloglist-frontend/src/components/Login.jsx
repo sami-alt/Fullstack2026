@@ -1,49 +1,48 @@
-import { useState } from "react"
-import loginServices from "../services/loginServices"
-import blogsServices from "../services/blogsServices"
+import { useState } from 'react'
+import loginServices from '../services/loginServices'
+import blogsServices from '../services/blogsServices'
 
-const Login = ({user, setUser, setToken, setMessage}) => {
+const Login = ({ setUser, setMessage }) => {
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-    const handleName = (event) => {
-        setUsername(event.target.value)
+  const handleName = (event) => {
+    setUsername(event.target.value)
+  }
+
+  const handlePass = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const loginAction = async () => {
+    event.preventDefault()
+    try{
+      const user = await loginServices.login({ username:username, password:password })
+      blogsServices.setToken(user.token)
+      window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+      setUser(user)
+      setMessage({ msg:'Logged in', status:'success' })
+    }catch(error){
+      setMessage({ msg:error.response.data.error, status:'error' })
     }
-
-    const handlePass = (event) => {
-        setPassword(event.target.value)
-    }
-
-    const loginAction = async () => {
-        event.preventDefault()
-        try{
-            const user = await loginServices.login({username:username, password:password})
-            //console.log(user.token)
-            blogsServices.setToken(user.token)
-            window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-            setUser(user)
-            setMessage({msg:'Logged in', status:'success'})
-        }catch(error){
-            setMessage({msg:error.response.data.error, status:'error'})
-        }
-    }
+  }
 
 
-    return (
-        <>
-            <h2>Login</h2>
-            <form onSubmit={loginAction}>
+  return (
+    <>
+      <h2>Login</h2>
+      <form onSubmit={loginAction}>
                 Username
-                <input onChange={handleName} value={username}></input>
-                <br/>
+        <input onChange={handleName} value={username}></input>
+        <br/>
                 Password
-                <input onChange={handlePass} value={password} type="password"></input>
-                <br/>
-                <button type="submit">Login</button>
-            </form>
-        </>
-    )
+        <input onChange={handlePass} value={password} type="password"></input>
+        <br/>
+        <button type="submit">Login</button>
+      </form>
+    </>
+  )
 }
 
 
