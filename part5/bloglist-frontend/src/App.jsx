@@ -28,6 +28,8 @@ const App = () => {
     getBlogs()
   }, [])
   
+  console.log('blogs',blogs)
+
   const addBlog = async (newPost) => {
       try{
         const newBlog = await blogsServices.addBlog(newPost)
