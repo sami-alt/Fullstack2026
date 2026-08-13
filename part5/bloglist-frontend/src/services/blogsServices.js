@@ -1,9 +1,6 @@
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 
-
-
-
 let token = null
 
 const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -40,5 +37,14 @@ const getAll = async () => {
   return response.data
 }
 
+const deletePost = async (id) => {
+    const config = {
+    headers: {Authorization: token}
+  }
+  const removeUrl = baseUrl + '/' + id
+  const response = await axios.delete(removeUrl, config)
+  return response.data
+}
 
-export default { getAll, addBlog, setToken, updateBlog }
+
+export default { getAll, addBlog, setToken, updateBlog, deletePost }

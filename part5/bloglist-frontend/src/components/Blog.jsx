@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, like, blogs, setBlogs }) => {
+const Blog = ({ blog, like, blogs, setBlogs, deletePost}) => {
   const [show, setShow] = useState(false)
   //console.log(blog)
   const handleLike = () => {
@@ -14,6 +14,11 @@ const Blog = ({ blog, like, blogs, setBlogs }) => {
 
   }
 
+  const handleRemove = () => {
+    event.preventDefault()
+    deletePost(blog.id)
+  }
+
   return(
       <div className="blogStyle">
         <div className= {show ? 'hide' : ''}  >{blog.title} {blog.author}<button onClick={()=> setShow(!show)}>{show ? 'hide' : 'view'}</button></div>  
@@ -22,6 +27,7 @@ const Blog = ({ blog, like, blogs, setBlogs }) => {
           <div className="infoTab" >{blog.url}</div>
           <div className="infoTab" >{blog.likes} <button onClick={handleLike}>like</button></div>
           <div className="infoTab" >{blog.user.name}</div>
+          <button onClick={handleRemove}>remove</button>
         </div>
         
       </div>

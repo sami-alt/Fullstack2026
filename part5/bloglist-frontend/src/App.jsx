@@ -28,8 +28,6 @@ const App = () => {
     getBlogs()
   }, [])
   
-  console.log('blogs',blogs)
-
   const addBlog = async (newPost) => {
       try{
         const newBlog = await blogsServices.addBlog(newPost)
@@ -45,12 +43,26 @@ const App = () => {
     try{
       const updated = await blogsServices.updateBlog(updatedPost, id)
       const user = blogs.filter(blog => blog.id === updated.id)[0].user.name
-      console.log('user',user)
-      console.log('updated',{...updated, user:{name:user}})
       setBlogs(blogs.filter(blog => blog.id !== updated.id).concat({...updated, user:{name:user}}))
       setMessage({msg:'Liked', status:'success'})
     }catch(error){
       setMessage({msg:error.response.data.error, status:'error'})
+    }
+  }
+
+  const removePost = async (id) => {
+    console.log('delete')
+    const toDelete = blogs.filter(blog => blog.id === id)[0].title
+    try{
+        if(window.confirm(`are you sure you want to delete post ${toDelete}`)){
+          await blogsServices.deletePost(id)
+          setBlogs(blogs.filter(blog => blog.id !== id))
+          setMessage({msg:'post removed', status:'success'})
+        }else{
+          return
+        }
+    }catch(error){
+        setMessage({msg:error.response.data.error})
     }
   }
 
@@ -63,7 +75,7 @@ const App = () => {
       <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({msg:'Logged out',status:'success'}) }}>logout</button><br/>
       <button onClick={()=> setVisible(true)}>Add blog post</button>     
       <AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible} createBlog={addBlog}/>
-      <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage} like={updateLikes}/>
+      <Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage} like={updateLikes} deletePost={removePost}/>
     </>
   )
   }
