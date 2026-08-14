@@ -13,16 +13,19 @@ const Blog = ({ blog, like, deletePost }) => {
 
   }
 
-  const handleRemove = () => {
+  const handleRemove = (event) => {
     event.preventDefault()
     deletePost(blog.id)
   }
+  
+  const handleViewAll = () => {
+      setShow(!show)
+  }
 
-    //
   return( 
     <div className="blog">
       <div className={show ? 'all' : 'some'}>
-        <div className="infoTab" >{blog.title} <button onClick={() => setShow(!show)}>{show ? 'hide' : 'view'}</button></div>
+        <div className="infoTab" >{blog.title} <button onClick={handleViewAll}>{show ? 'hide' : 'view'}</button></div>
         <div className="infoTab" >{blog.author}</div>
         {show && <>
         <div className="infoTab-all" >{blog.url}</div>
