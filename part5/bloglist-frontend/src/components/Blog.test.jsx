@@ -56,13 +56,13 @@ test('render title, author, url, likes on view mode', async () => {
   const like = () => {}
   const deletePost = () => {}
 
-  const mockHandle = vi.fn()
+  const mockHandler = vi.fn()
 
 
   render(
     <Blog
       blog={blog}
-      like={like}
+      like={mockHandler}
       deletePost={deletePost}
     />
   )
@@ -83,5 +83,41 @@ test('render title, author, url, likes on view mode', async () => {
   expect(url).toBeVisible()
   expect(likes).toBeVisible()
   expect(poster).toBeVisible()
+
+})
+
+test('render title, author, url, likes on view mode', async () => {
+      const blog = {
+    title: 'title',
+    author: 'author',
+    url: 'www.test.com',
+    likes: 67,
+    user: {
+      name: 'tester'
+    }
+  }
+
+  const deletePost = () => {}
+
+  const mockHandler = vi.fn()
+
+
+  render(
+    <Blog
+      blog={blog}
+      like={mockHandler}
+      deletePost={deletePost}
+    />
+  )
+
+
+  const user = userEvent.setup()
+  const view = screen.getByText('view')
+  await user.click(view)
+  const like = screen.getByText('like')
+  await user.click(like)
+  await user.click(like)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
 
 })
