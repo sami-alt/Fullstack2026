@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 const Blog = ({ blog, like, deletePost }) => {
   const [show, setShow] = useState(false)
-  //console.log(blog)
   const handleLike = () => {
     event.preventDefault()
     like({ user:blog.user.id,
@@ -19,15 +18,19 @@ const Blog = ({ blog, like, deletePost }) => {
     deletePost(blog.id)
   }
 
-  return(
-    <div className="blogStyle">
-      <div className= {show ? 'hide' : ''}  >{blog.title} {blog.author}<button onClick={() => setShow(!show)}>{show ? 'hide' : 'view'}</button></div>
-      <div className={show ? 'show' : 'hide'}>
-        <div className="infoTab" >{blog.title}  {blog.author}<button onClick={() => setShow(!show)}>{show ? 'hide' : 'view'}</button></div>
-        <div className="infoTab" >{blog.url}</div>
-        <div className="infoTab" >{blog.likes} <button onClick={handleLike}>like</button></div>
-        <div className="infoTab" >{blog.user.name}</div>
+    //
+  return( 
+    <div className="blog">
+      <div className={show ? 'all' : 'some'}>
+        <div className="infoTab" >{blog.title} <button onClick={() => setShow(!show)}>{show ? 'hide' : 'view'}</button></div>
+        <div className="infoTab" >{blog.author}</div>
+        {show && <>
+        <div className="infoTab-all" >{blog.url}</div>
+        <div className="infoTab-all" >{blog.likes} <button onClick={handleLike}>like</button></div>
+        <div className="infoTab-all" >{blog.user.name}</div>
         <button onClick={handleRemove}>remove</button>
+        </>
+      }
       </div>
 
     </div>
