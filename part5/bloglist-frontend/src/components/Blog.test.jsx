@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { getAllByPlaceholderText, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
-
+import AddBlog from './AddBlog'
+import { wait } from '@testing-library/user-event/dist/cjs/utils/index.js'
 
 test('render only title and author', async () => {
   const blog = {
@@ -121,3 +122,31 @@ test('render title, author, url, likes on view mode', async () => {
   expect(mockHandler.mock.calls).toHaveLength(2)
 
 })
+
+
+test('test adding new blog post', async () => {
+    const user = userEvent.setup()
+    const createBlogPost = vi.fn()  
+
+    
+    const visible = true
+    const setVisible = vi.fn()
+    const setMessage = vi.fn()
+    
+    const {container} = render(<AddBlog setMessage={setMessage} visible={visible} setVisible={setVisible} createBlog={createBlogPost} ></AddBlog>)
+
+    const title = container.querySelector('#title')
+    const author = container.querySelector('#author')
+    const url = container.querySelector('#url')
+    const createButton = screen.getByText('Add post')
+
+    await user.type(title, 'test title')
+    await user.type(author, 'test author')
+    await user.type(url, 'www.test.fi')
+
+    await user.click(createButton)
+
+    expect(createBlogPost.mock.calls).toHaveLength(1)
+    console.log(createBlogPost.mock.calls)
+})
+

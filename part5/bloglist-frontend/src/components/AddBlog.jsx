@@ -41,13 +41,13 @@ const AddBlog = ({ setMessage, visible, setVisible, createBlog }) => {
       <h2>create new post</h2>
       <form onSubmit={newBlog}>
                 title
-        <input onChange={handleTitle}></input><br/>
+        <input onChange={handleTitle} id='title' placeholder='title'/><br/>
                 author
-        <input onChange={handleAuthor}></input><br/>
+        <input onChange={handleAuthor} id='author' /><br/>
                 url
-        <input onChange={handleUrl}></input><br/>
+        <input onChange={handleUrl} id='url' /><br/>
         <button type="submit">Add post</button>
-        <button onClick={handleCancel}>Cancel</button>
+        <button type='button' onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   )
