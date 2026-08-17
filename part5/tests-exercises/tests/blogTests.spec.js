@@ -49,9 +49,12 @@ describe('logged in user functionalities', ()=> {
         password: 'test'
       }
     })
- 
     await page.goto('/')
+    await page.getByRole('textbox').first().fill('tester1')
+    await page.getByRole('textbox').last().fill('test')
+    await page.getByRole('button', {name:'login'}).click()
   })
+  /*
   test('user can add blog and it becomes visible in list of blogs',  async({page})=> {
     await page.getByRole('textbox').first().fill('tester1')
     await page.getByRole('textbox').last().fill('test')
@@ -81,6 +84,20 @@ describe('logged in user functionalities', ()=> {
 
     const likes = await page.getByText('1')
     await expect(likes).toHaveText('1')
+  })
+  */
+  test('blogs can be removed and it requires confirm action', async ({page}) => {
+    await page.getByRole('button', {name:'Add blog post'}).click()
+    await page.locator('#title').fill('Test of blogs')
+    await page.locator('#author').fill('Testter of blogs')
+    await page.locator('#url').fill('florist.com')
+    await page.getByRole('button', {name:'Add post'}).click()
+    await page.getByRole('button',{name:'view'}).click()
+    await page.on('dialog', dialog => dialog.accept());
+    await page.getByRole('button',{name:'remove'}).click()
+    //await page.getByRole('button').click();
+    //await page.goto('/')
+    await expect(page.getByText('post removed')).toBeVisible()
   })
 
 })

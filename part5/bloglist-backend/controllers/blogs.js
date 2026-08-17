@@ -26,10 +26,10 @@ blogsRouter.post('/', userExtractor ,async (request, response) => {
     return response.status(401).json({ error: 'token invalid' })
   }
 
+  console.log(request)
   const owner = await User.findById(request.user.id)
   if (!body.title || !body.url)
     return response.status(400).json({error: 'request body missing content'})
-
   const blog = new Blog({
     title:body.title,
     author:body.author,
