@@ -66,5 +66,21 @@ describe('logged in user functionalities', ()=> {
     await expect(newPost).toBeVisible()
   })
 
+  test('blogs post can be liked', async({page}) => {
+    await page.getByRole('textbox').first().fill('tester1')
+    await page.getByRole('textbox').last().fill('test')
+    await page.getByRole('button', {name:'login'}).click()
+    await page.getByRole('button', {name:'Add blog post'}).click()
+    await page.locator('#title').fill('Test of blogs')
+    await page.locator('#author').fill('Testter of blogs')
+    await page.locator('#url').fill('florist.com')
+    await page.getByRole('button', {name:'Add post'}).click()
+    await page.getByRole('button',{name:'view'}).click()
+    await page.getByRole('button',{name:'like'}).click()
+    await page.getByRole('button',{name:'view'}).click()
+
+    const likes = await page.getByText('1')
+    await expect(likes).toHaveText('1')
+  })
 
 })
