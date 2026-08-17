@@ -10,7 +10,7 @@ const middleware = require('./utils/middleware')
 const app = express()
 
 mongoose.connect(config.MONGO_DB_URI, { family: 4 })
-  .then(() => logger.info('Connected to MongoDB'))
+  .then(() => {logger.info('Connected to MongoDB'), console.log('a okay')})
   .catch(error => logger.error(error))
 
 app.use(express.json())
@@ -20,6 +20,12 @@ app.use(middleware.tokenExtractor)
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+console.log(process.env.NODE_ENV,'node')
+if (process.env.NODE_ENV === 'test-local'){
+  console.log('bbb')
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

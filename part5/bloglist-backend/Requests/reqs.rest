@@ -85,3 +85,6 @@ Content-Type: application/json
   "name": "test",
   "password": "test"
 }
+
+###Testing
+POST http://localhost:3003/api/testing/reset
