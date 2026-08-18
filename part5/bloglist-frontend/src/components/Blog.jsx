@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, like, deletePost }) => {
+const Blog = ({ blog, like, deletePost, user }) => {
   const [show, setShow] = useState(false)
+  console.log('blog',blog, 'user',user)
   const handleLike = () => {
     event.preventDefault()
     like({ user:blog.user.id,
@@ -21,7 +22,7 @@ const Blog = ({ blog, like, deletePost }) => {
   const handleViewAll = () => {
       setShow(!show)
   }
-
+  console.log('names',blog.user.username === user.username )
   return( 
     <div className="blog">
       <div className={show ? 'all' : 'some'}>
@@ -32,7 +33,9 @@ const Blog = ({ blog, like, deletePost }) => {
         <div className="infoTab-all" >{blog.likes} </div>
         <div><button onClick={handleLike}>like</button></div>
         <div className="infoTab-all" >{blog.user.name}</div>
+        {(blog.user.username === user.username) &&
         <button onClick={handleRemove}>remove</button>
+        }
         </>
       }
       </div>
