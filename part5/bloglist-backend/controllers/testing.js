@@ -3,7 +3,7 @@ const User = require('../models/users')
 const Blogs = require('../models/blog')
 
 testRouter.post('/reset', async (request, response) => {
-    console.log('aaaa')
+    //console.log('aaaa')
     await User.deleteMany({})
     await Blogs.deleteMany({})
 

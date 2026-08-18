@@ -21,7 +21,7 @@ app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 console.log(process.env.NODE_ENV,'node')
-if (process.env.NODE_ENV === 'test-local'){
+if (process.env.NODE_ENV === 'test'){
   console.log('bbb')
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)

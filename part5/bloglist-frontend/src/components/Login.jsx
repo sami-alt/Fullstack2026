@@ -33,11 +33,16 @@ const Login = ({ setUser, setMessage }) => {
     <>
       <h2>Login</h2>
       <form onSubmit={loginAction}>
+        <label>
+
                 Username
         <input onChange={handleName} value={username}></input>
+        </label>
         <br/>
+        <label>
                 Password
         <input onChange={handlePass} value={password} type="password"></input>
+        </label>
         <br/>
         <button type="submit">Login</button>
       </form>
