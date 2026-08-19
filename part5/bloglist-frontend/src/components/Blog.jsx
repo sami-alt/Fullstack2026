@@ -22,7 +22,7 @@ const Blog = ({ blogs, like, deletePost, user }) => {
   const handleRemove = () => {
     deletePost(blog.id)
   }
-
+  
   return (
     <div className="blog">
       <div>
@@ -30,10 +30,6 @@ const Blog = ({ blogs, like, deletePost, user }) => {
         <div className="infoTab">{blog.author}</div>
         <div className="infoTab-all">{blog.url}</div>
         <div className="infoTab-all">{blog.likes}{user && <button onClick={handleLike}>like</button>}</div>
-
-        <div>
-          
-        </div>
 
         <div className="infoTab-all">{blog.user.name}</div>
 
