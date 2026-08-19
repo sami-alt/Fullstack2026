@@ -6,7 +6,6 @@ const AddBlog = ({ setMessage, visible, setVisible, createBlog }) => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const navigate = useNavigate()
-  //const hide = { display: visible ? '' : 'none' }
 
   const handleTitle = (event) => {
     setTitle(event.target.value)

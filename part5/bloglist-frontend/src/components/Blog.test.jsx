@@ -142,127 +142,7 @@ test('blog owner can see the remove button', () => {
   screen.debug()
   expect(screen.queryByRole('button', { name: "remove" })).toBeInTheDocument()
 })
-
-/*
-test('render only title and author', async () => {
-    const blog = {
-      title: 'title',
-      author: 'author',
-      url: 'www.test.com',
-      likes: 67,
-      user: {
-        name: 'tester'
-      }
-    }
-
-    const like = () => {}
-    const deletePost = () => {}
-
-    const mockHandle = vi.fn()
-
-
-    render(
-      <Blog
-        blog={blog}
-        like={like}
-        deletePost={deletePost}
-      />
-    )
-
-  const title = screen.getByText('title')
-  const author = screen.getByText('author')
-  const url = await screen.queryByText('www.test.com')
-  const likes = await screen.queryByText('67')
-  const poster = await screen.queryByText('tester')
-
-  expect(title).toBeVisible()
-  expect(author).toBeVisible()
-
-  expect(url).toBeNull()
-  expect(likes).toBeNull()
-  expect(poster).toBeNull()
-})
-
-test('render title, author, url, likes on view mode', async () => {
-      const blog = {
-    title: 'title',
-    author: 'author',
-    url: 'www.test.com',
-    likes: 67,
-    user: {
-      name: 'tester'
-    }
-  }
-
-  const like = () => {}
-  const deletePost = () => {}
-
-  const mockHandler = vi.fn()
-
-
-  render(
-    <Blog
-      blog={blog}
-      like={mockHandler}
-      deletePost={deletePost}
-    />
-  )
-
-
-  const user = userEvent.setup()
-  const button = screen.getByText('view')
-  await user.click(button)
-
-  const title = screen.getByText('title')
-  const author = screen.getByText('author')
-  const url = await screen.queryByText('www.test.com')
-  const likes = await screen.queryByText('67')
-  const poster = await screen.queryByText('tester')
-
-  expect(title).toBeVisible()
-  expect(author).toBeVisible()
-  expect(url).toBeVisible()
-  expect(likes).toBeVisible()
-  expect(poster).toBeVisible()
-
-})
-
-test('render title, author, url, likes on view mode', async () => {
-      const blog = {
-    title: 'title',
-    author: 'author',
-    url: 'www.test.com',
-    likes: 67,
-    user: {
-      name: 'tester'
-    }
-  }
-
-  const deletePost = () => {}
-
-  const mockHandler = vi.fn()
-
-
-  render(
-    <Blog
-      blog={blog}
-      like={mockHandler}
-      deletePost={deletePost}
-    />
-  )
-
-
-  const user = userEvent.setup()
-  const view = screen.getByText('view')
-  await user.click(view)
-  const like = screen.getByText('like')
-  await user.click(like)
-  await user.click(like)
-
-  expect(mockHandler.mock.calls).toHaveLength(2)
-
-})
-
+//Test of blogs 4 - The return of the blog
 
 test('test adding new blog post', async () => {
     const user = userEvent.setup()
@@ -273,7 +153,10 @@ test('test adding new blog post', async () => {
     const setVisible = vi.fn()
     const setMessage = vi.fn()
     
-    const {container} = render(<AddBlog setMessage={setMessage} visible={visible} setVisible={setVisible} createBlog={createBlogPost} ></AddBlog>)
+    const {container} = render(
+      <MemoryRouter><AddBlog setMessage={setMessage} visible={visible} setVisible={setVisible} createBlog={createBlogPost} ></AddBlog>
+    </MemoryRouter>
+   )
 
     const title = container.querySelector('#title')
     const author = container.querySelector('#author')
@@ -289,5 +172,3 @@ test('test adding new blog post', async () => {
     expect(createBlogPost.mock.calls).toHaveLength(1)
     console.log(createBlogPost.mock.calls)
 })
-
-*/

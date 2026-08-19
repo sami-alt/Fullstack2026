@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Blog = ({ blogs, like, deletePost, user }) => {
   const { id } = useParams()
-  console.log('id', id)
   const blog = blogs.find(blog => blog.id === id)
+  const navigate = useNavigate()
 
   if (!blog) {
     return <div>Blog not found</div>
@@ -21,8 +22,11 @@ const Blog = ({ blogs, like, deletePost, user }) => {
 
   const handleRemove = () => {
     deletePost(blog.id)
+    navigate('/')
   }
-  
+  if (user)
+      console.log('blog',blog.user.username,'user' ,user.username)
+    console.log(user)
   return (
     <div className="blog">
       <div>

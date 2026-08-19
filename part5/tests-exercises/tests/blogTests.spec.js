@@ -15,11 +15,15 @@ describe('Login tests', () => {
   })
 
   test('Login form is shown', async ({ page }) => {
+    await page.getByText('Login').click();
     const heading = await page.getByRole('heading', {name:'Login'})
     await expect(heading).toBeVisible()
   })
   
   test('succeeds with correct credentials', async ({ page }) => {
+
+    await page.getByText('Login').click();
+
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -44,6 +48,7 @@ describe('Login tests', () => {
   })
   
   test('fails with wrong credentials', async ({ page }) => {
+    await page.getByText('Login').click();
     await page.getByRole('textbox').first().fill('väärä')
     await page.getByRole('textbox').last().fill('väärä')
     await page.getByRole('button', {name:'login'}).click()
@@ -65,6 +70,8 @@ describe('logged in user functionalities', ()=> {
       }
     })
     await page.goto('/')
+
+    await page.getByText('Login').click();
 
     await expect(
       page.getByRole('heading', { name: 'Login' })
@@ -88,42 +95,48 @@ describe('logged in user functionalities', ()=> {
       page.getByText('Logged in')
     ).toBeVisible()
 
-// Add blog 1
-await page.getByRole('button', { name: 'Add blog post' }).click()
+await page.getByText('add blog').click();
+
+await expect(
+  page.getByText("Add post")
+).toBeVisible()
+
+await page.getByRole('button', { name: 'Add post' }).click()
 
 await page.locator('#title').fill('Test of blogs 1')
-await page.locator('#author').fill('Testter of blogs')
+await page.locator('#author').fill('Tester of blogs')
 await page.locator('#url').fill('florist.com')
 
 await page.getByRole('button', { name: 'Add post' }).click()
 
-// Wait until blog 1 has actually appeared in the UI
 const blog1 = page
   .locator('.blog')
   .filter({ hasText: 'Test of blogs 1' })
 
 await expect(blog1).toBeVisible()
 
-// Add blog 2
-await page.getByRole('button', { name: 'Add blog post' }).click()
+await page.getByText('add blog').click();
+
+await expect(
+  page.getByText("Add post")
+).toBeVisible()
+await page.getByRole('button', { name: 'Add post' }).click()
 
 await page.locator('#title').fill('Test of blogs 2 - The Bloggening')
-await page.locator('#author').fill('Testter of blogs')
+await page.locator('#author').fill('Tester of blogs')
 await page.locator('#url').fill('florist.com')
 
 await page.getByRole('button', { name: 'Add post' }).click()
 
-// Wait until blog 2 has actually appeared
 const blog2 = page
   .locator('.blog')
   .filter({ hasText: 'Test of blogs 2 - The Bloggening' })
 
 await expect(blog2).toBeVisible()
 
-// Only now log out
 await page.getByRole('button', { name: 'logout' }).click()
 
-// Wait until logout has actually changed the UI
+await page.getByText('Login').click();
 await expect(
   page.getByRole('heading', { name: 'Login' })
 ).toBeVisible()
@@ -140,6 +153,7 @@ await expect(
   })
   
   test('user can add blog and it becomes visible in list of blogs',  async({page})=> {
+    await page.getByText('Login').click();
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -161,17 +175,24 @@ await expect(
     await expect(
       page.getByText('Logged in')
     ).toBeVisible()
-    await page.getByRole('button', {name:'Add blog post'}).click()
+
+    await page.getByText('add blog').click();
+
+    
     await page.locator('#title').fill('Test of blogs 3: The bloging bugaloo')
-    await page.locator('#author').fill('Testter of blogs')
+    await page.locator('#author').fill('Tester of blogs')
     await page.locator('#url').fill('florist.com')
-    await page.getByRole('button', {name:'Add post'}).click()
+    await expect(
+      page.getByText("Add post")
+    ).toBeVisible()
+    await page.getByRole('button', { name: 'Add post' }).click()
 
     const newPost = page.getByText('Test of blogs 3: The bloging bugaloo')
     await expect(newPost).toBeVisible()
   })
 
 test('blogs post can be liked', async ({ page }) => {
+  await page.getByText('Login').click();
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -194,12 +215,14 @@ test('blogs post can be liked', async ({ page }) => {
       page.getByText('Logged in')
     ).toBeVisible()
 
-  await page.getByRole('button', { name: 'Add blog post' }).click()
+  await page.getByText('add blog').click();
+
+  await page.getByRole('button', { name: 'Add post' }).click()
 
   await page.locator('#title').fill(
     'Test of blogs 3: The bloging bugaloo'
   )
-  await page.locator('#author').fill('Testter of blogs')
+  await page.locator('#author').fill('Tester of blogs')
   await page.locator('#url').fill('florist.com')
 
   await page.getByRole('button', { name: 'Add post' }).click()
@@ -211,15 +234,14 @@ test('blogs post can be liked', async ({ page }) => {
     })
 
   await expect(blog).toBeVisible()
-
-  await blog.getByRole('button', { name: 'view' }).click()
+  await page.getByText('Test of blogs 3: The bloging bugaloo').click();
   await blog.getByRole('button', { name: 'like' }).click()
-  await blog.getByRole('button', { name: 'view' }).click()
 
   await expect(blog.getByText('1')).toBeVisible()
 })
     
     test('blogs can be removed and it requires confirm action', async ({page}) => {
+      await page.getByText('Login').click();
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -242,7 +264,7 @@ test('blogs post can be liked', async ({ page }) => {
       page.getByText('Logged in')
     ).toBeVisible()
 
-      await page.getByRole('button',{name:'view'}).first().click()
+      await page.getByText('Test of blogs 1').click();
       await page.on('dialog', dialog => dialog.accept());
       await page.getByRole('button',{name:'remove'}).click()
       await expect(page.getByText('post removed')).toBeVisible()
@@ -250,6 +272,7 @@ test('blogs post can be liked', async ({ page }) => {
       
   
   test('only poster of the blog can see remove button', async ({page}) => {
+    await page.getByText('Login').click();
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -272,12 +295,13 @@ test('blogs post can be liked', async ({ page }) => {
       page.getByText('Logged in')
     ).toBeVisible()
 
-    await page.getByRole('button',{name:'view'}).first().click()
+    await page.getByText('Test of blogs 1').click();
 
     expect(page.getByText('remove')).not.toBeAttached()
   })
 
   test('blog posts are ordered by number of likes', async ({page}) => {
+    await page.getByText('Login').click();
     await expect(
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
@@ -303,7 +327,7 @@ test('blogs post can be liked', async ({ page }) => {
 
     await page.getByRole('button', {name:'Add blog post'}).click()
     await page.locator('#title').fill('Test of blogs 3: The bloging bugaloo')
-    await page.locator('#author').fill('Testter of blogs')
+    await page.locator('#author').fill('Tester of blogs')
     await page.locator('#url').fill('florist.com')
     await page.getByRole('button', {name:'Add post'}).click()
 

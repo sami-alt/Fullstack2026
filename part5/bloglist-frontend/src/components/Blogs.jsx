@@ -9,7 +9,6 @@ const Blogs = ({ blogs }) => {
         <div key={blog.id} className='blog'>
           <Link to={`/blogs/${blog.id}`}>
             {blog.title}
-            {console.log(blog)}
           </Link>
         </div>
       )}
