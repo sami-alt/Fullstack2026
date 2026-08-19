@@ -13,7 +13,6 @@ import {
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  //const [token, setToken] = useState(null)
   const [message, setMessage] = useState(null)
   const [visible, setVisible] = useState(false)
   
@@ -86,16 +85,18 @@ const App = () => {
   return (
     <>
       <Router>
-
-        <div>
-          <Link to='/'>blogs</Link>
+        <nav className='navBar'>
+          <Link id='navlink' to='/'>blogs</Link>
+          <Link id='navlink' to='/add'>add blog</Link>
+          {user && user.name}
           {user ? <button onClick={() => {setUser(null), window.localStorage.removeItem('loggedInUser'), setMessage({ msg:'Logged out',status:'success' }) }}>logout</button>: <Link to='login'>Login</Link>}
-        </div>
+        </nav>
       <Message message={message} setMessage={setMessage}></Message>
       <Routes>
           <Route path='/blogs/:id' element={<Blog blogs={blogs} like={updateLikes} deletePost={removePost} user={user}></Blog>}></Route>
           <Route path='/' element={<Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage} like={updateLikes} deletePost={removePost}/>} />
           <Route path='/login' element={<Login user={user} setUser={setUser} setMessage={setMessage}/>}/>
+          {user && <Route path='/add' element={<AddBlog setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} visible={visible} setVisible={setVisible} createBlog={addBlog}/>} />}
       </Routes>
       </Router>
     </>

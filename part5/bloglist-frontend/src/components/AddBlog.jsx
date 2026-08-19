@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AddBlog = ({ setMessage, visible, setVisible, createBlog }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-
-  const hide = { display: visible ? '' : 'none' }
+  const navigate = useNavigate()
+  //const hide = { display: visible ? '' : 'none' }
 
   const handleTitle = (event) => {
     setTitle(event.target.value)
@@ -26,7 +27,7 @@ const AddBlog = ({ setMessage, visible, setVisible, createBlog }) => {
       return
     }
     createBlog({ title:title, author:author ,url:url })
-    setVisible(false)
+    navigate('/')
   }
 
   const handleCancel = () => {
@@ -37,11 +38,11 @@ const AddBlog = ({ setMessage, visible, setVisible, createBlog }) => {
   }
 
   return (
-    <div style={hide}>
+    <div>
       <h2>create new post</h2>
       <form onSubmit={newBlog}>
                 title
-        <input onChange={handleTitle} id='title' placeholder='title'/><br/>
+        <input onChange={handleTitle} id='title'/><br/>
                 author
         <input onChange={handleAuthor} id='author' /><br/>
                 url

@@ -50,3 +50,12 @@
     border: lightblue solid;
     border-radius: 15px;
 }
+
+.navBar{
+    display: flex;
+    justify-content: left;
+}
+
+.navBar #navlink{
+    padding: 0px 10px;
+}
