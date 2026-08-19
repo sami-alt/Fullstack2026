@@ -15,7 +15,7 @@ describe('Login tests', () => {
   })
 
   test('Login form is shown', async ({ page }) => {
-    const heading = page.getByRole('heading', {name:'Login'})
+    const heading = await page.getByRole('heading', {name:'Login'})
     await expect(heading).toBeVisible()
   })
   
@@ -24,8 +24,8 @@ describe('Login tests', () => {
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
 
-    const username = page.getByLabel('username')
-    const password = page.getByLabel('password')
+    const username = await page.getByLabel('username')
+    const password = await page.getByLabel('password')
       
     await expect(username).toBeVisible()
     await expect(password).toBeVisible()
@@ -70,8 +70,8 @@ describe('logged in user functionalities', ()=> {
       page.getByRole('heading', { name: 'Login' })
     ).toBeVisible()
 
-    const username = page.getByLabel('username')
-    const password = page.getByLabel('password')
+    const username = await page.getByLabel('username')
+    const password = await page.getByLabel('password')
       
     await expect(username).toBeVisible()
     await expect(password).toBeVisible()

@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import loginServices from '../services/loginServices'
 import blogsServices from '../services/blogsServices'
+import { useNavigate } from 'react-router-dom'
 
 const Login = ({ setUser, setMessage }) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const navigate = useNavigate()
 
   const handleName = (event) => {
     setUsername(event.target.value)
@@ -23,6 +26,7 @@ const Login = ({ setUser, setMessage }) => {
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       setUser(user)
       setMessage({ msg:'Logged in', status:'success' })
+      navigate('/')
     }catch(error){
       setMessage({ msg:error.response.data.error, status:'error' })
     }

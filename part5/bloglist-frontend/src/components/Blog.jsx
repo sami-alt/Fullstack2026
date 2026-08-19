@@ -22,7 +22,7 @@ const Blog = ({ blog, like, deletePost, user }) => {
   const handleViewAll = () => {
       setShow(!show)
   }
-  console.log('names',blog.user.username === user.username )
+  //console.log('names',blog.user.username === user.username )
   return( 
     <div className="blog">
       <div className={show ? 'all' : 'some'}>
@@ -33,7 +33,7 @@ const Blog = ({ blog, like, deletePost, user }) => {
         <div className="infoTab-all" >{blog.likes} </div>
         <div><button onClick={handleLike}>like</button></div>
         <div className="infoTab-all" >{blog.user.name}</div>
-        {(blog.user.username === user.username) &&
+        { user && ( blog.user.username === user.username) &&
         <button onClick={handleRemove}>remove</button>
         }
         </>
