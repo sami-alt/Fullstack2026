@@ -1,48 +1,48 @@
-import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-const Blog = ({ blog, like, deletePost, user }) => {
-  const [show, setShow] = useState(false)
-  console.log('blog',blog, 'user',user)
+const Blog = ({ blogs, like, deletePost, user }) => {
+  const { id } = useParams()
+  console.log('id', id)
+  const blog = blogs.find(blog => blog.id === id)
+
+  if (!blog) {
+    return <div>Blog not found</div>
+  }
+
   const handleLike = () => {
-    event.preventDefault()
-    like({ user:blog.user.id,
-      author:blog.author,
-      title:blog.title,
-      url:blog.url,
+    like({
+      user: blog.user.id,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url,
       likes: blog.likes + 1
     }, blog.id)
-
   }
 
-  const handleRemove = (event) => {
-    event.preventDefault()
+  const handleRemove = () => {
     deletePost(blog.id)
   }
-  
-  const handleViewAll = () => {
-      setShow(!show)
-  }
-  //console.log('names',blog.user.username === user.username )
-  return( 
-    <div className="blog">
-      <div className={show ? 'all' : 'some'}>
-        <div className="infoTab" >{blog.title} <button onClick={handleViewAll}>{show ? 'hide' : 'view'}</button></div>
-        <div className="infoTab" >{blog.author}</div>
-        {show && <>
-        <div className="infoTab-all" >{blog.url}</div>
-        <div className="infoTab-all" >{blog.likes} </div>
-        <div><button onClick={handleLike}>like</button></div>
-        <div className="infoTab-all" >{blog.user.name}</div>
-        { user && ( blog.user.username === user.username) &&
-        <button onClick={handleRemove}>remove</button>
-        }
-        </>
-      }
-      </div>
 
+  return (
+    <div className="blog">
+      <div>
+        <div className="infoTab">{blog.title}</div>
+        <div className="infoTab">{blog.author}</div>
+        <div className="infoTab-all">{blog.url}</div>
+        <div className="infoTab-all">{blog.likes}{user && <button onClick={handleLike}>like</button>}</div>
+
+        <div>
+          
+        </div>
+
+        <div className="infoTab-all">{blog.user.name}</div>
+
+        {user && blog.user.username === user.username &&
+          <button onClick={handleRemove}>remove</button>
+        }
+      </div>
     </div>
   )
-
 }
 
 export default Blog

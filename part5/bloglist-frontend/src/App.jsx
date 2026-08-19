@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
-
+import Blog from './components/Blog'
 import Login from './components/Login'
 import blogsServices from './services/blogsServices'
 import AddBlog from './components/AddBlog'
@@ -82,22 +82,6 @@ const App = () => {
       </>
       )
       }
-      
-      const NotLoggedIn = ({ user, setUser, message, setMessage }) => {
-        return (
-          <>
-          <Message message={message} setMessage={setMessage}></Message>
-        <Login user={user} setUser={setUser} setMessage={setMessage}/>
-        </>
-        )
-        }
-        
-        
-        return (
-          <>
-          {user ? <LoggedIn blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser} message={message} setMessage={setMessage}/> : <NotLoggedIn user={user} setUser={setUser} message={message} setMessage={setMessage}/>}
-          </>
-          )
           */
   return (
     <>
@@ -109,6 +93,7 @@ const App = () => {
         </div>
       <Message message={message} setMessage={setMessage}></Message>
       <Routes>
+          <Route path='/blogs/:id' element={<Blog blogs={blogs} like={updateLikes} deletePost={removePost} user={user}></Blog>}></Route>
           <Route path='/' element={<Blogs blogs={blogs} user={user} setUser={setUser} setMessage={setMessage} like={updateLikes} deletePost={removePost}/>} />
           <Route path='/login' element={<Login user={user} setUser={setUser} setMessage={setMessage}/>}/>
       </Routes>

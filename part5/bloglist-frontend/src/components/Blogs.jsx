@@ -1,12 +1,18 @@
-import Blog from './Blog'
+import { Link } from 'react-router-dom'
 
-const Blogs = ({ blogs, setBlogs, like, deletePost, user }) => {
-
-  const sorted = blogs.toSorted((a,b) => b.likes - a.likes)
+const Blogs = ({ blogs }) => {
+  const sorted = blogs.toSorted((a, b) => b.likes - a.likes)
 
   return (
     <>
-      {sorted.map(blog => <Blog key={blog.id} blog={blog} like={like} blogs={blogs} setBlogs={setBlogs} deletePost={deletePost} user={user}/>)}
+      {sorted.map(blog =>
+        <div key={blog.id} className='blog'>
+          <Link to={`/blogs/${blog.id}`}>
+            {blog.title}
+            {console.log(blog)}
+          </Link>
+        </div>
+      )}
     </>
   )
 }
